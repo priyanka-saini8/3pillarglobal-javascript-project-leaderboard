@@ -1,51 +1,42 @@
-let playerlist;
-const savedplayerlist = JSON.parse(localStorage.getItem('playerlist'));  
-                      
-if( Array.isArray(savedplayerlist)) {
-    playerlist = savedplayerlist;
-}
-else {
-    playerlist = [{
-        firstname: 'MARTHA',
-        lastname: 'YOHANES',
-        timestamp: 'JAN 30,2020 01:09',
-        country: 'FINLAND',
-        playerscore: 85,
-        id: 'id1'
-    }, {
-        firstname: 'DAVID',
-        lastname: 'SMITH',
-        timestamp: 'JAN 30,2020 01:09',
-        country: 'UNITED KINGDOM',
-        playerscore: 80,
-        id: 'id2'
-    }, {
-        firstname: 'ASABENEH',
-        lastname: 'YETAYEH',
-        timestamp: 'JAN 30,2020 01:09',
-        country: 'FINLAND' ,
-        playerscore: 75 ,
-        id: 'id3'            
-    }, {
-        firstname: 'MATHIAS',
-        lastname: 'ELIAS',
-        timestamp: 'JAN 30,2020 01:09',
-        country: 'SWEDEN' ,
-        playerscore: 70 ,
-        id: 'id4'
-    }];
+let fname = document.getElementById('fname');
+let lname = document.getElementById('lname');
+let country = document.getElementById('country');
+let score = document.getElementById('score');
+let message = document.getElementById('message');
+
+let leaderLocal = new Array;
+
+const savedList = JSON.parse(localStorage.getItem('leaderLocal'));
+
+if (Array.isArray(savedList)) {
+    leaderLocal = savedList;
 }
 
-function createPlayerListItem(firstname,lastname,country,playerscore) {
-    const id = '' + new Date().getTime();                                 
-
-    playerlist.push({
-        firstname: firstname,
-        lastname: lastname,
-        timestamp: ,
-        country: country,
-        playerscore: playerscore,
-        id: id                      // so here we are storing a 'number' as an id
-    });
-    saveplayer();             // whenever data gets updated it is saved in local storage
-}11z
+function validateInput() {
+    if ((fname.value == "") || (lname.value == "") || country.value == "" || score.value == "") {
+        message.innerHTML = "All Fields are required";
+        return 1;
+    } else {
+        message.innerHTML = "Item Added";
+        createObj();
+    }
+}
+function createObj() {
+    let fname = document.getElementById('fname');
+let lname = document.getElementById('lname');
+let country = document.getElementById('country');
+let score = document.getElementById('score');
+let message = document.getElementById('message');
+    const id = '' + new Date().getTime();
+    console.log(id);
+    const obj = {
+        fname: fname.value,
+        lname: lname.value,
+        country: country.value,
+        score: score.value,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toLocaleDateString()
+    }
+    leaderLocal.push(obj);
+    console.log(obj);
+}
