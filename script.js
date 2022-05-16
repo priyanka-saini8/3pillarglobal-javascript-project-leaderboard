@@ -30,6 +30,7 @@ function createObj() {
     const id = '' + new Date().getTime();
     console.log(id);
     const obj = {
+        id: id,
         fname: fname.value,
         lname: lname.value,
         country: country.value,
@@ -48,7 +49,7 @@ function createSortedArray(leaderLocal) {
         while(j > 0 && leaderLocal[j].score > leaderLocal[j-1].score) {
             var temp = leaderLocal[j];
             leaderLocal[j] = leaderLocal[j-1];
-            leaderLocal[j-1] = temp
+            leaderLocal[j-1] = temp;
             j--;
         }
     }
@@ -61,9 +62,15 @@ function printArray() {
        newDiv.classList.add("info-container");
        listDiv.appendChild(newDiv);
 
+       let firstDiv = document.createElement('div');
+       firstDiv.classList.add("name-container");
+       newDiv.appendChild(firstDiv);
+
        let nameDiv = document.createElement('div');
-       nameDiv.classList.add("name-container");
-       newDiv.appendChild(nameDiv);
+       firstDiv.appendChild(nameDiv);
+
+       let dateDiv = document.createElement('div');
+       firstDiv.appendChild(dateDiv);
 
        let countryDiv = document.createElement('div');
        countryDiv.classList.add("country-container");
@@ -78,7 +85,33 @@ function printArray() {
        newDiv.appendChild(operationDiv);
 
        nameDiv.innerHTML = leaderLocal[i].fname+leaderLocal[i].lname;
+       dateDiv.innerHTML = leaderLocal[i].date+' '+leaderLocal[i].time;
        countryDiv.innerHTML = leaderLocal[i].country;
        scoreDiv.innerHTML = leaderLocal[i].score;
+
+       let deleteButton = document.createElement('button');
+       let increaseButton = document.createElement('button');
+       let decreaseButton = document.createElement('button');
+
+       deleteButton.setAttribute("onclick", `deleteObj(${leaderLocal[i].id})`);
+
+       deleteButton.classList.add('buttons');
+       increaseButton.classList.add('buttons');
+       decreaseButton.classList.add('buttons');
+       operationDiv.appendChild(deleteButton);
+       operationDiv.appendChild(increaseButton);
+       operationDiv.appendChild(decreaseButton);
     }
+}
+
+function deleteObj(id) {
+    for(var i=0; i < leaderLocal.length;i++) {
+        if(id == leaderLocal[i].id) {
+            for(var j = i; j < leaderLocal.length-1; j++) {
+                leaderLocal[j] =  leaderLocal[j+1];
+            }
+        }
+    }
+    leaderLocal.pop();
+    printArray();
 }
