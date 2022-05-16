@@ -48,7 +48,7 @@ function createSortedArray(leaderLocal) {
         while(j > 0 && leaderLocal[j].score > leaderLocal[j-1].score) {
             var temp = leaderLocal[j];
             leaderLocal[j] = leaderLocal[j-1];
-            leaderLocal[j-1] = temp;
+            leaderLocal[j-1] = temp
             j--;
         }
     }
