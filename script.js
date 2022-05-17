@@ -10,17 +10,16 @@ const savedList = JSON.parse(localStorage.getItem('leaderLocal'));
 
 if (Array.isArray(savedList)) {
     leaderLocal = savedList;
+    printArray();
 }
 
 function validateInput() {
     if ((fname.value == "") || (lname.value == "") || country.value == "" || score.value == "") {
-        message.innerHTML = "All Fields are required";
-        return 1;
-    } else {
-        message.innerHTML = "Item Added";
-        createObj();
-    }
+        message.innerHTML = "All fields are required";
+    } else{
+        createObj();}
 }
+
 function createObj() {
     let fname = document.getElementById('fname');
     let lname = document.getElementById('lname');
@@ -28,18 +27,17 @@ function createObj() {
     let score = document.getElementById('score');
     let message = document.getElementById('message');
     const id = '' + new Date().getTime();
-    console.log(id);
+    let fulltime = new Date().toString();
     const obj = {
         id: id,
         fname: fname.value,
         lname: lname.value,
         country: country.value,
         score: parseInt(score.value),
-        time: new Date().toLocaleTimeString(),
-        date: new Date().toLocaleDateString()
+        time: fulltime.substring(16,21),
+        date: fulltime.substring(4, 15)
     }
     leaderLocal.push(obj);
-    console.log(obj);
     createSortedArray(leaderLocal);
     printArray();
 }
@@ -68,9 +66,11 @@ function printArray() {
 
        let nameDiv = document.createElement('div');
        firstDiv.appendChild(nameDiv);
+       nameDiv.classList.add("nameDiv");
 
        let dateDiv = document.createElement('div');
        firstDiv.appendChild(dateDiv);
+       dateDiv.classList.add("dateDiv");
 
        let countryDiv = document.createElement('div');
        countryDiv.classList.add("country-container");
@@ -84,14 +84,18 @@ function printArray() {
        operationDiv.classList.add("operation-container");
        newDiv.appendChild(operationDiv);
 
-       nameDiv.innerHTML = leaderLocal[i].fname+leaderLocal[i].lname;
-       dateDiv.innerHTML = leaderLocal[i].date+' '+leaderLocal[i].time;
-       countryDiv.innerHTML = leaderLocal[i].country;
+       nameDiv.innerHTML = leaderLocal[i].fname.toUpperCase()+' '+leaderLocal[i].lname.toUpperCase();
+       dateDiv.innerHTML = leaderLocal[i].date.toUpperCase()+' '+leaderLocal[i].time;
+       countryDiv.innerHTML = leaderLocal[i].country.toUpperCase();
        scoreDiv.innerHTML = leaderLocal[i].score;
 
        let deleteButton = document.createElement('button');
        let increaseButton = document.createElement('button');
        let decreaseButton = document.createElement('button');
+
+       deleteButton.innerHTML = "<img src='\image\\delete-icon.png' class='delete-icon'>";
+       increaseButton.innerHTML ='+5';
+       decreaseButton.innerHTML = '-5';
 
        deleteButton.setAttribute("onclick", `deleteObj(${leaderLocal[i].id})`);
        increaseButton.setAttribute("onclick", `increaseScore(${leaderLocal[i].id})`);
@@ -103,7 +107,10 @@ function printArray() {
        operationDiv.appendChild(deleteButton);
        operationDiv.appendChild(increaseButton);
        operationDiv.appendChild(decreaseButton);
+
+
     }
+    saveToStorage();
 }
 
 function deleteObj(id) {
@@ -136,4 +143,8 @@ function decreaseScore(id) {
     }
     createSortedArray(leaderLocal);
     printArray();
+}
+
+function saveToStorage() {
+    localStorage.setItem('leaderLocal', JSON.stringify(leaderLocal));
 }
