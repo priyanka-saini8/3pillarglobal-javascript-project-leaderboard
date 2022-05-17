@@ -94,6 +94,8 @@ function printArray() {
        let decreaseButton = document.createElement('button');
 
        deleteButton.setAttribute("onclick", `deleteObj(${leaderLocal[i].id})`);
+       increaseButton.setAttribute("onclick", `increaseScore(${leaderLocal[i].id})`);
+       decreaseButton.setAttribute("onclick", `decreaseScore(${leaderLocal[i].id})`);
 
        deleteButton.classList.add('buttons');
        increaseButton.classList.add('buttons');
@@ -113,5 +115,25 @@ function deleteObj(id) {
         }
     }
     leaderLocal.pop();
+    printArray();
+}
+
+function increaseScore(id) {
+    for(var i = 0; i < leaderLocal.length; i++) {
+        if(id == leaderLocal[i].id) {
+            leaderLocal[i].score += 5;
+        }
+    }
+    createSortedArray(leaderLocal);
+    printArray();
+}
+
+function decreaseScore(id) {
+    for(var i = 0; i < leaderLocal.length; i++) {
+        if(id == leaderLocal[i].id) {
+            leaderLocal[i].score -= 5;
+        }
+    }
+    createSortedArray(leaderLocal);
     printArray();
 }
