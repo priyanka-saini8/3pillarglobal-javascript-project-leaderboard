@@ -24,6 +24,6 @@ I was assigned a task to create a Mini Project named Leaderboard that looks simi
 
 
 ### The Page is Responsive
-I have used Media Queries along with some CSS to make the site responsive so that it looks good on small screens(like Mobile Phones)
+I have used Media Queries along with some CSS to make the site responsive so that it looks good on small screens(like Mobile Phones)<br>
 ![Res1](https://user-images.githubusercontent.com/63971975/174875999-22d6f6c3-9999-4986-9f21-4fb3bddbcac1.JPG)
 ![Res2](https://user-images.githubusercontent.com/63971975/174876017-eaa850ef-a3d1-4a8b-a0f5-50643f0ab783.JPG)
