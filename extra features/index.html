@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Raleway:wght@400;500&family=Roboto:wght@300;400;500;700&family=Yaldevi:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <title>Leaderboard - 3 Pillar Global</title>
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <h1>Leaderboard</h1>
+        </div>
+
+        <div class="input-row">
+            <input id="fname" type="text" placeholder="First Name">
+            <input id="lname" type="text" placeholder="Last Name">
+            <input id="country" type="text" placeholder="Country">
+            <input id="score" type="text" placeholder="Player Score">
+
+            <button class="add-player" onclick="validateInput();">Add Player</button>
+        </div>
+
+        <div id="message"></div>
+
+        <div id="listboard">
+
+        </div>
+    </div>
+    <script src='https://cdn.plot.ly/plotly-2.12.1.min.js'></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
