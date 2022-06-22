@@ -15,9 +15,12 @@ if (Array.isArray(savedList)) {
 printArray();
 
 function validateInput() {
-    if ((fname.value == "") || (lname.value == "") || country.value == "" || score.value == "") {
+    if ((fname.value == "") || (lname.value == "") || country.value == "" || score.value == "") 
         message.innerHTML = "All fields are required";
-    } else {
+    else if (fname.value.length > 15 || lname.value.length > 15 || country.value.length > 15) 
+        message.innerHTML = "Value is too long. Enter smaller value";
+    else {
+        message.innerHTML = '';
         createObj();
     }
 }
@@ -25,7 +28,7 @@ function validateInput() {
 function createObj() {
     const id = '' + new Date().getTime();
     let fulltime = new Date().toString();
-    console.log(fulltime);
+
     const obj = {
         id: id,
         fname: fname.value,
@@ -36,17 +39,16 @@ function createObj() {
         date: fulltime.substring(4, 15),
         variationScore: [parseInt(score.value)],
         variationTime: [`${fulltime.substring(4, 15)} ${fulltime.substring(16, 24)}`]
-    }
-    console.log(fulltime);
-    console.log(obj);
+    };
+
     leaderLocal.push(obj);
     createSortedArray(leaderLocal);
-    printArray();
+
 }
 
 function createSortedArray(leaderLocal) {
-    for (var i = 1; i < leaderLocal.length; i++) {
-        var j = i;
+    for (let i = 1; i < leaderLocal.length; i++) {
+        let j = i;
         while (j > 0 && leaderLocal[j].score > leaderLocal[j - 1].score) {
             var temp = leaderLocal[j];
             leaderLocal[j] = leaderLocal[j - 1];
@@ -54,19 +56,24 @@ function createSortedArray(leaderLocal) {
             j--;
         }
     }
+    printArray();
 }
 
 function printArray() {
     let listDiv = document.getElementById('listboard');
-    if(leaderLocal.length <= 0) {
-        listDiv.innerHTML = 'No player is added yet<br> Kindly add a player first';
-    } else 
-        listDiv.innerHTML = '';
+
+    if (leaderLocal.length <= 0) listDiv.innerHTML = 'No player is added yet<br> Kindly add a player first';
+    else listDiv.innerHTML = '';
+
     for (var i = 0; i < leaderLocal.length; i++) {
         const newDiv = document.createElement('div');
         newDiv.setAttribute("onclick", `showGraph(${i})`);
         newDiv.classList.add("info-container");
         listDiv.appendChild(newDiv);
+
+        let graphDiv = document.createElement('div');
+        graphDiv.setAttribute("id", `graph${i}`);
+        listDiv.appendChild(graphDiv);
 
         let firstDiv = document.createElement('div');
         firstDiv.classList.add("name-container");
@@ -112,33 +119,25 @@ function printArray() {
         deleteButton.classList.add('buttons');
         increaseButton.classList.add('buttons');
         decreaseButton.classList.add('buttons');
+
         operationDiv.appendChild(deleteButton);
         operationDiv.appendChild(increaseButton);
         operationDiv.appendChild(decreaseButton);
-
-        let graphDiv = document.createElement('div');
-        graphDiv.setAttribute("id", `graph${i}`);
-        listDiv.appendChild(graphDiv)
-
     }
     saveToStorage();
 }
 
 function deleteObj(id, event) {
     for (var i = 0; i < leaderLocal.length; i++) {
-        if (id == leaderLocal[i].id) {
-            for (var j = i; j < leaderLocal.length - 1; j++) {
-                leaderLocal[j] = leaderLocal[j + 1];
-            }
-        }
+        if (id == leaderLocal[i].id) leaderLocal.splice(i, 1);
     }
-    leaderLocal.pop();
-    printArray();
+    createSortedArray(leaderLocal);
     event.stopPropagation();
 }
 
 function increaseScore(id, event) {
     let fulltime = new Date().toString();
+
     for (var i = 0; i < leaderLocal.length; i++) {
         if (id == leaderLocal[i].id) {
             leaderLocal[i].score += 5;
@@ -147,12 +146,12 @@ function increaseScore(id, event) {
         }
     }
     createSortedArray(leaderLocal);
-    printArray();
     event.stopPropagation();
 }
 
 function decreaseScore(id, event) {
     let fulltime = new Date().toString();
+
     for (var i = 0; i < leaderLocal.length; i++) {
         if (id == leaderLocal[i].id) {
             leaderLocal[i].score -= 5;
@@ -161,7 +160,6 @@ function decreaseScore(id, event) {
         }
     }
     createSortedArray(leaderLocal);
-    printArray();
     event.stopPropagation();
 }
 
@@ -169,27 +167,28 @@ function saveToStorage() {
     localStorage.setItem('leaderLocal', JSON.stringify(leaderLocal));
 }
 
-// //
 function showGraph(index) {
-        let graphDiv = document.getElementById(`graph${index}`);
-        let infoContainers = document.querySelectorAll(".info-container");
-        let clickedContainer = infoContainers[index];
-        clickedContainer.setAttribute("onclick", `hideGraph(${index})`);
-        var playerData = {
-            x: leaderLocal[index].variationTime,
-            y: leaderLocal[index].variationScore,
-            mode: 'lines+markers'
-        };
+    let graphDiv = document.getElementById(`graph${index}`);
 
-        var data = [playerData];
+    let infoContainers = document.querySelectorAll(".info-container");
+    let clickedContainer = infoContainers[index];
+    clickedContainer.setAttribute("onclick", `hideGraph(${index})`);
 
-        var layout = {
-            title: 'Graph'
-        };
+    let playerData = {
+        x: leaderLocal[index].variationTime,
+        y: leaderLocal[index].variationScore,
+        mode: 'lines+markers'
+    };
 
-        Plotly.newPlot(graphDiv, data, layout);
+    let data = [playerData];
 
+    let layout = {
+        title: `Graph of ${leaderLocal[index].fname.concat(" ", leaderLocal[index].lname).toUpperCase()}`
+    };
+
+    Plotly.newPlot(graphDiv, data, layout);
 }
+
 function hideGraph(index) {
     let graphDiv = document.getElementById(`graph${index}`);
     graphDiv.innerHTML = "";

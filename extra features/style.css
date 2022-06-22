@@ -1,21 +1,20 @@
 .main {
-    align-items: center;
     text-align: center;
     width: 90%;
     margin: auto;
     max-width: 900px;
     font-family: Montserrat, Arial;
 }
+
 .input-row {
     display: flex;
-    justify-content: center;
 }
+
 input {
     width: 20%;
     height: 35px;
     border: 1px solid rgb(238, 203, 219);
     border-radius: 1px;
-    font-family: Montserrat, Arial;
     font-size: 15px;
     padding-left: 10px;
     padding-right: 10px;
@@ -23,8 +22,9 @@ input {
 }
 
 #fname, #lname, #country {
-    margin-right: 5px;
-}
+    margin-right: 8px;
+} 
+
 input:focus {
     border-width: 2px;
     border-color: pink;
@@ -35,12 +35,9 @@ input:focus {
     height: 39px;
     background-color: rgb(238, 203, 219);
     border: none;
-    border-radius: 1px;
     color: white;
-    font-family: Montserrat, Arial;
     font-size: 15px;
-    text-align: center;
-    margin-left: 1px;
+    margin-left: 4px; 
 }
 
 #message {
@@ -49,31 +46,24 @@ input:focus {
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 25px;
-    font-family: Montserrat, Arial;
 }
 
-#listboard {
-    margin : auto;
-    width: 100%
-}
 .info-container {
     background-color: rgb(238, 203, 219);
     display: grid;
     grid-template-columns: 25% 25% 25% 1fr;
     text-align: left;
     height: auto;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px;
     margin-top: 10px;
-    font-family: Montserrat, Arial;
 }
+
 .info-container:hover {
     background-color: pink;
     cursor: pointer;
 }
 
-.name-container, .country-container, .score-container {
+.name-container, .country-container, .score-container{
     display: flex;
     flex-direction: column;
     margin: 10px 0px;
@@ -108,6 +98,7 @@ input:focus {
 .buttons:hover {
     background-color:rgb(226, 255, 200);
 }
+
 .delete-icon {
     height: 12px;
     width: 12px;
@@ -117,27 +108,34 @@ input:focus {
 /* For Center Aligning the Graph */
 .js-plotly-user-select-none svg-container {
     justify-content: center;
-    align-items: center;
-    align-content: center;
 }
+
 @media screen and (max-width: 750px) {
     .input-row {
         flex-direction: column;
         align-items: center;
     }
+
+    #fname, #lname, #country {
+        margin-right: 0px;
+    } 
+
     input {
         width: 40%;
         margin-bottom: 5px;
     }
+
     .add-player {
         width: 40%;
     }
+    
     .info-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
+
     .operation-container {
         margin: auto;
     }
